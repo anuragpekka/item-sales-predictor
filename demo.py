@@ -3,7 +3,7 @@ from store.config.configuration import Configuration
 from store.pipeline.pipeline import Pipeline
 #from store.component.data_validation import DataValidation
 #from store.component.data_ingestion import DataIngestion
-from store.entity.store_predictor import StorePredictor, StoreData
+#from store.entity.store_predictor import StorePredictor, StoreData
 from store.logger import logging
 import requests
 #from zipfile import ZipFile
@@ -41,10 +41,13 @@ def main():
         #training_config = configs.get_model_trainer_config()
         #print(f"training_config: {training_config}")
 
-        #pipe = Pipeline(config=Configuration(current_time_stamp=get_current_time_stamp()))
-        #pipe.run_pipeline()
+        pipe = Pipeline(config=Configuration(current_time_stamp=get_current_time_stamp()))
+        pipe.run_pipeline()
 
-        SAVED_MODELS_DIR_NAME = "saved_models"
+        
+        #Testing latest model
+        
+        '''SAVED_MODELS_DIR_NAME = "saved_models"
         MODEL_DIR = os.path.join(ROOT_DIR, SAVED_MODELS_DIR_NAME)
         store_data = StoreData(Item_Weight = 9.395,
                                 Item_Fat_Content = "Low Fat",
@@ -61,7 +64,7 @@ def main():
         store_predictor = StorePredictor(model_dir=MODEL_DIR)
         item_outlet_sales_value = store_predictor.predict(X=store_df)
         print(f"item_outlet_sales_value={item_outlet_sales_value}") #4242.4776
-
+'''
     except Exception as e:
         logging.error(f"{e}")
         print(e)

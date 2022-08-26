@@ -101,7 +101,8 @@ def load_data(file_path: str, schema_info: dict) -> pd.DataFrame:
             raise Exception(error_message)
 
         #Remove unuseful columns
-        dataframe.drop(columns=schema_info[DATASET_DROP_COLUMNS_KEY], axis=1, inplace=True)
+        if schema_info[DATASET_DROP_COLUMNS_KEY] != None:
+            dataframe.drop(columns=schema_info[DATASET_DROP_COLUMNS_KEY], axis=1, inplace=True)
 
         return dataframe
 

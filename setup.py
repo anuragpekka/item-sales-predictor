@@ -11,14 +11,14 @@ REQUIREMENTS_FILE_NAME="requirements.txt"
 
 def get_requirements_list()->List[str]: #List->[str]: Function returns list of strings
     """
-    Description: This function is goib=ng to return list od requiremnts 
+    Description: This function is goib=ng to return list of requiremnts 
     mentioned in requirement.txt file
 
     return this function is going eo reutun a list which contain name
     of libraries mentioned in requirements.txt file
     """
     with open(REQUIREMENTS_FILE_NAME) as requirement_file:
-        return requirement_file.readlines()#.remove("-e .")
+        return requirement_file.readlines()
         
 setup(
     name=PROJECT_NAME,

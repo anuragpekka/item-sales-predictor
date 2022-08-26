@@ -146,9 +146,6 @@
 
             </tr>
             {% for column,value in context['store_data'].items() %}
-
-
-
             <tr>
                 <td>{{column}}</td>
                 <td>{{value[0]}}</td>
@@ -157,9 +154,9 @@
             {% endfor %}
             <tr>
 
-                <td>item_outlet_sales </td>
+                <td>Item_outlet_sales </td>
                 <td>
-                    {{ context['item_outlet_sales'] }}
+                    {{ context['Item_outlet_sales'] }}
                 </td>
             </tr>
         </table>
@@ -167,7 +164,7 @@
         {% else %}
        
               <h5 class="card-title">Submit Form</h5>
-              <p class="card-text">Kindly provide necessary information to estimate item store sales</p>
+              <p class="card-text">Kindly provide information to estimate item store sales</p>
             
          
 

@@ -50,6 +50,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+demo.*
 
 # Translations
 *.mo
@@ -105,7 +106,7 @@ celerybeat.pid
 *.vscode
 
 # Artifact 
-housing/artifact
+store/artifact
 saved_models
 
 # Environments

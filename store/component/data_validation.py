@@ -97,7 +97,7 @@ class DataValidation:
             else:
                 logging.info("Train and test data are valid.")
 
-            return validation_status 
+            return validation_status
         except Exception as e:
             raise StoreException(e,sys) from e
 

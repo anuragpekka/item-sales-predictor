@@ -188,10 +188,12 @@ class Configuration:
             )
 
             base_accuracy = model_trainer_config_info[MODEL_TRAINER_BASE_ACCURACY_KEY]
+            train_test_difference = model_trainer_config_info[MODEL_TRAINER_TRAIN_TEST_DIFFERENCE_KEY]
 
             model_trainer_config = ModelTrainerConfig(
                 trained_model_file_path=trained_model_file_path,
                 base_accuracy=base_accuracy,
+                train_test_difference=train_test_difference,
                 model_config_file_path=model_config_file_path
             )
             logging.info(f"Model trainer config: {model_trainer_config}")

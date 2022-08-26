@@ -119,14 +119,19 @@ class DataIngestion:
             logging.info(f"Reading csv file: [{store_file_path}]")
             store_data_frame = pd.read_csv(store_file_path)
 
-            #Seperating to create bins/catagories by factor 1300
-            #(df.Item_Outlet_Sales.unique().max() - df.Item_Outlet_Sales.unique().min())/5 ~= 2610
-            # INterquartile range/5 =~ 1300 
+            #Seperating to create bins/catagories by factor 1300            
+            # (Target column boxplot range)/5 =~ 1300 
             catagory_column = target_column+"_catagoty"
             store_data_frame[catagory_column] = pd.cut(
                 store_data_frame[target_column],
-                bins=[0.0, 1300.0, 2600.0, 3900.0, 6400.0, np.inf], 
-                labels=[1,2,3,4,5]                      
+                #bins=[0.0, 1300.0, 2600.0, 3900.0, 6400.0, np.inf],
+                #labels=[1,2,3,4,5]
+                #bins=[0, 650, 1300, 1950, 2600, 3250, 3900, 4550, 5200, 5850, np.inf],
+                #labels=[1,2,3,4,5,6,7,8,9,10]
+                bins=[0, 325, 650, 975, 1300, 1625, 1950, 2275, 2600, 2925, 3250, 3575, 3900, 4225, 4550, 4875, 5200, 5525, 5850, 6175, np.inf],
+                labels=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+                #bins=[0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500,np.inf],
+                #labels=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
             )
             
 
@@ -135,7 +140,7 @@ class DataIngestion:
             strat_test_set = None
 
             #Using the StratifiedShuffleSplit to split data
-            split = StratifiedShuffleSplit(n_splits=1, test_size=0.1, random_state=42)
+            split = StratifiedShuffleSplit(n_splits=1, test_size=0.15, random_state=42)
 
             #X = store_data_frame, y = store_data_frame[catagory_column]
             #train_index ,test_index are Array of index
@@ -176,7 +181,6 @@ class DataIngestion:
             zip_file_path =  self.download_store_data()
             self.extract_zip_file(zip_file_path=zip_file_path)
             return self.split_data_as_train_test()
-            #return self.copy_train_test_data()
         except Exception as e:
             raise StoreException(e,sys) from e
     

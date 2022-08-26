@@ -40,7 +40,9 @@ MetricInfoArtifact = namedtuple("MetricInfoArtifact",
 
 
 
-def evaluate_regression_model(model_list: list, X_train:np.ndarray, y_train:np.ndarray, X_test:np.ndarray, y_test:np.ndarray, base_accuracy:float=0.6) -> MetricInfoArtifact:
+def evaluate_regression_model(model_list: list, X_train:np.ndarray, y_train:np.ndarray,
+                                 X_test:np.ndarray, y_test:np.ndarray,
+                                  base_accuracy:float=0.6, train_test_difference:float=0.2) -> MetricInfoArtifact:
     """
     Description:
     This function compare multiple regression model return best model
@@ -98,7 +100,8 @@ def evaluate_regression_model(model_list: list, X_train:np.ndarray, y_train:np.n
 
             #if model accuracy is greater than base accuracy and train and test score is within certain thershold
             #we will accept that model as accepted model
-            if model_accuracy >= base_accuracy and diff_test_train_acc < 0.05: #Put this in config file
+            logging.info(f"model_accuracy [{model_accuracy}], diff_test_train_acc [{diff_test_train_acc}]")
+            if model_accuracy >= base_accuracy and diff_test_train_acc < train_test_difference: #Put this in config file
                 base_accuracy = model_accuracy
                 metric_info_artifact = MetricInfoArtifact(model_name=model_name,
                                                         model_object=model,
@@ -112,7 +115,7 @@ def evaluate_regression_model(model_list: list, X_train:np.ndarray, y_train:np.n
                 logging.info(f"Acceptable model found {metric_info_artifact}. ")
             index_number += 1
         if metric_info_artifact is None:
-            logging.info(f"No model found with higher accuracy than base accuracy")
+            logging.info(f"No model found with higher accuracy than base accuracy={base_accuracy} and train-test difference={train_test_difference}.")
         return metric_info_artifact
     except Exception as e:
         raise StoreException(e, sys) from e
@@ -342,7 +345,7 @@ class ModelFactory:
         try:
             best_model = None
             for grid_searched_best_model in grid_searched_best_model_list:
-                logging.debug(f"Model = {grid_searched_best_model.model}, Best score = {grid_searched_best_model.best_score}")
+                logging.info(f"Checking model = {grid_searched_best_model.model}, Best score = {grid_searched_best_model.best_score}")
                 
                 if base_accuracy < grid_searched_best_model.best_score:
                     logging.info(f"Acceptable model found:{grid_searched_best_model}")

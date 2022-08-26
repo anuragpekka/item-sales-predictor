@@ -70,7 +70,8 @@ class ModelTrainer:
             
             
             base_accuracy = self.model_trainer_config.base_accuracy
-            logging.info(f"Expected accuracy: {base_accuracy}")
+            train_test_difference = self.model_trainer_config.train_test_difference
+            logging.info(f"Expected accuracy: {base_accuracy}, Expected train test difference: {train_test_difference}")
 
             logging.info(f"Initiating operation model selecttion")
             best_model = model_factory.get_best_model(X=x_train,y=y_train,base_accuracy=base_accuracy)
@@ -82,29 +83,34 @@ class ModelTrainer:
             
             model_list = [model.best_model for model in grid_searched_best_model_list ]
             logging.info(f"Evaluation all trained model on training and testing dataset both")
-            metric_info:MetricInfoArtifact = evaluate_regression_model(model_list=model_list,X_train=x_train,y_train=y_train,X_test=x_test,y_test=y_test,base_accuracy=base_accuracy)
-
-            logging.info(f"Best found model on both training and testing dataset.")
+            metric_info:MetricInfoArtifact = evaluate_regression_model(model_list=model_list,X_train=x_train,y_train=y_train,
+                                                                       X_test=x_test,y_test=y_test,
+                                                                       base_accuracy=base_accuracy,
+                                                                       train_test_difference=train_test_difference)
             
-            preprocessing_obj = load_object(file_path=self.data_transformation_artifact.preprocessed_object_file_path)
-            model_object = metric_info.model_object
+            model_trainer_artifact=None
+            if(metric_info is not None):
+                logging.info(f"Best model found on both training and testing dataset.")
+                
+                preprocessing_obj = load_object(file_path=self.data_transformation_artifact.preprocessed_object_file_path)
+                model_object = metric_info.model_object
 
 
-            trained_model_file_path=self.model_trainer_config.trained_model_file_path
-            store_model = StoreEstimatorModel(preprocessing_object=preprocessing_obj,trained_model_object=model_object)
-            logging.info(f"Saving model at path: {trained_model_file_path}")
-            save_object(file_path=trained_model_file_path,obj=store_model)
+                trained_model_file_path=self.model_trainer_config.trained_model_file_path
+                store_model = StoreEstimatorModel(preprocessing_object=preprocessing_obj,trained_model_object=model_object)
+                logging.info(f"Saving model at path: {trained_model_file_path}")
+                save_object(file_path=trained_model_file_path,obj=store_model)
 
-            #Final artifact
-            model_trainer_artifact=  ModelTrainerArtifact(is_trained=True,message="Model Trained successfully",
-            trained_model_file_path=trained_model_file_path,
-            train_rmse=metric_info.train_rmse,
-            test_rmse=metric_info.test_rmse,
-            train_accuracy=metric_info.train_accuracy,
-            test_accuracy=metric_info.test_accuracy,
-            model_accuracy=metric_info.model_accuracy
-            
-            )
+                #Final artifact
+                model_trainer_artifact=  ModelTrainerArtifact(is_trained=True,message="Model Trained successfully",
+                trained_model_file_path=trained_model_file_path,
+                train_rmse=metric_info.train_rmse,
+                test_rmse=metric_info.test_rmse,
+                train_accuracy=metric_info.train_accuracy,
+                test_accuracy=metric_info.test_accuracy,
+                model_accuracy=metric_info.model_accuracy
+                
+                )
 
             logging.info(f"Model Trainer Artifact: {model_trainer_artifact}")
             return model_trainer_artifact

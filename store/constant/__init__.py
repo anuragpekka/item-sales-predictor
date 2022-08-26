@@ -60,13 +60,6 @@ REPLACE_VALUES_IN_COLUMN_DICT = { "Item_Fat_Content": {"low fat": "Low Fat",
                                                       } 
                                 }
 
-'''COLUMN_TOTAL_ROOMS = "total_rooms"
-COLUMN_POPULATION = "population"
-COLUMN_HOUSEHOLDS = "households"
-COLUMN_TOTAL_BEDROOM = "total_bedrooms"
-'''
-
-
 DATASET_SCHEMA_COLUMNS_KEY=  "columns"
 DATASET_DROP_COLUMNS_KEY = "drop_columns"
 
@@ -81,6 +74,7 @@ MODEL_TRAINER_CONFIG_KEY = "model_trainer_config"
 MODEL_TRAINER_TRAINED_MODEL_DIR_KEY = "trained_model_dir"
 MODEL_TRAINER_TRAINED_MODEL_FILE_NAME_KEY = "model_file_name"
 MODEL_TRAINER_BASE_ACCURACY_KEY = "base_accuracy"
+MODEL_TRAINER_TRAIN_TEST_DIFFERENCE_KEY = "train_test_difference"
 MODEL_TRAINER_MODEL_CONFIG_DIR_KEY = "model_config_dir"
 MODEL_TRAINER_MODEL_CONFIG_FILE_NAME_KEY = "model_config_file_name"
 

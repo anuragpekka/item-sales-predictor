@@ -25,7 +25,7 @@ MODEL_DIR = os.path.join(ROOT_DIR, SAVED_MODELS_DIR_NAME)
 from store.logger import get_log_dataframe
 
 STORE_DATA_KEY = "store_data"
-ITEM_STORE_SALES_VALUE_KEY = "item_outlet_sales"
+ITEM_STORE_SALES_VALUE_KEY = "Item_outlet_sales"
 
 app = Flask(__name__)
 

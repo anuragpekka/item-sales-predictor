@@ -86,6 +86,12 @@ class ModelEvaluation:
 
     def initiate_model_evaluation(self) -> ModelEvaluationArtifact:
         try:
+            if(self.model_trainer_artifact is None): #No model met base_accuracy criteria
+                logging.info("Trained model is no better than existing model hence not accepting trained model")
+                model_evaluation_artifact = ModelEvaluationArtifact(evaluated_model_path=None,
+                                                                    is_model_accepted=False)
+                return model_evaluation_artifact
+            
             trained_model_file_path = self.model_trainer_artifact.trained_model_file_path
             trained_model_object = load_object(file_path=trained_model_file_path)
 

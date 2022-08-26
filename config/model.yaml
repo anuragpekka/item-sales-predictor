@@ -10,19 +10,17 @@ model_selection:
     class: LinearRegression
     module: sklearn.linear_model
     params:
-      fit_intercept: True
-     
+      fit_intercept: true
     search_param_grid:
       fit_intercept:
-      - True
-      - False
-
+      - true
+      - false
   module_1:
     class: RandomForestRegressor
     module: sklearn.ensemble
     params:
-      n_estimators: 40
       min_samples_leaf: 2
+      n_estimators: 40
     search_param_grid:
       min_samples_leaf:
       - 2
@@ -32,13 +30,3 @@ model_selection:
       - 50
       - 90
       - 120
-  module_2:
-    class: SVR
-    module: sklearn.svm
-    params:
-       kernel: rbf
-    search_param_grid:
-      kernel:
-      - rbf
-      - sigmoid
-      

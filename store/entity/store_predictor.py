@@ -53,15 +53,14 @@ class StoreData:
                 #"Item_Identifier" : [self.Item_Identifier],
                 "Item_Weight" : [self.Item_Weight],
                 "Item_Fat_Content": [self.Item_Fat_Content],
-                "Item_Visibility" : self.Item_Visibility,
+                "Item_Visibility" : [self.Item_Visibility],
                 "Item_Type" : [self.Item_Type],
                 "Item_MRP" : [self.Item_MRP],
                 "Outlet_Identifier"  : [self.Outlet_Identifier],
                 "Outlet_Establishment_Year"  : [self.Outlet_Establishment_Year],
                 "Outlet_Size" : [self.Outlet_Size],
                 "Outlet_Location_Type" : [self.Outlet_Location_Type],
-                "Outlet_Type" : [self.Outlet_Type],
-                "Item_Outlet_Sales" : [self.Item_Outlet_Sales]}
+                "Outlet_Type" : [self.Outlet_Type]}
             return input_data
         except Exception as e:
             raise StoreException(e, sys)

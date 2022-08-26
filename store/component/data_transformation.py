@@ -73,8 +73,8 @@ class DataTransformation:
                 if col in numerical_columns:
                     numerical_columns.remove(col)
                 if col in categorical_columns:
-                    categorical_columns.remove(col) 
-
+                    categorical_columns.remove(col)
+                     
 
             num_pipeline = Pipeline(steps=[
                 ('imputer', SimpleImputer(strategy="median")),
@@ -84,7 +84,7 @@ class DataTransformation:
 
             cat_pipeline = Pipeline(steps=[
                  ('impute', SimpleImputer(strategy="most_frequent")),                 
-                 #('value_replacer', ValueReplacer(columns=categorical_columns)),
+                 ('value_replacer', ValueReplacer(columns=categorical_columns)),
                  ('one_hot_encoder', OneHotEncoder()),
                  ('scaler', StandardScaler(with_mean=False))
             ]

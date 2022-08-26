@@ -1,11 +1,5 @@
 best_model:
-  model_path: F:\study\iN\13Machine-learning-project_11June\store-sales-predictor\store-sales-predictor\store\artifact\model_trainer\2022-08-24-17-58-28\trained_model\model.pkl
+  model_path: F:\study\iN\13Machine-learning-project_11June\store-sales-predictor\store-sales-predictor\store\artifact\model_trainer\2022-08-26-21-23-30\trained_model\model.pkl
 history:
-  2022-08-24-09-56-27:
-    model_path: F:\study\iN\13Machine-learning-project_11June\store-sales-predictor\store-sales-predictor\store\artifact\model_trainer\2022-08-24-09-13-16\trained_model\model.pkl
-  2022-08-24-10-12-42:
-    model_path: F:\study\iN\13Machine-learning-project_11June\store-sales-predictor\store-sales-predictor\store\artifact\model_trainer\2022-08-24-09-56-27\trained_model\model.pkl
-  2022-08-24-16-32-09:
-    model_path: F:\study\iN\13Machine-learning-project_11June\store-sales-predictor\store-sales-predictor\store\artifact\model_trainer\2022-08-24-10-12-42\trained_model\model.pkl
-  2022-08-24-17-58-28:
-    model_path: F:\study\iN\13Machine-learning-project_11June\store-sales-predictor\store-sales-predictor\store\artifact\model_trainer\2022-08-24-16-32-09\trained_model\model.pkl
+  2022-08-26-21-23-30:
+    model_path: F:\study\iN\13Machine-learning-project_11June\store-sales-predictor\store-sales-predictor\store\artifact\model_trainer\2022-08-26-18-01-14\trained_model\model.pkl

@@ -150,9 +150,11 @@ class Pipeline(Thread):
                                                                     data_validation_artifact=data_validation_artifact,
                                                                     model_trainer_artifact=model_trainer_artifact)
 
+            model_accuracy = 0
             if model_evaluation_artifact.is_model_accepted:
                 model_pusher_artifact = self.start_model_pusher(model_eval_artifact=model_evaluation_artifact)
                 logging.info(f'Model pusher artifact: {model_pusher_artifact}')
+                model_accuracy = model_trainer_artifact.model_accuracy
             else:
                 logging.info("Trained model rejected.")
             logging.info("Pipeline completed.")
@@ -169,7 +171,7 @@ class Pipeline(Thread):
                                              message="Pipeline has been completed.",
                                              experiment_file_path=Pipeline.experiment_file_path,
                                              is_model_accepted=model_evaluation_artifact.is_model_accepted,
-                                             accuracy=model_trainer_artifact.model_accuracy
+                                             accuracy=model_accuracy
                                              )
             logging.info(f"Pipeline experiment: {Pipeline.experiment}")
             self.save_experiment()
