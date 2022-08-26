@@ -1,5 +1,0 @@
-best_model:
-  model_path: F:\study\iN\13Machine-learning-project_11June\store-sales-predictor\store-sales-predictor\store\artifact\model_trainer\2022-08-26-21-23-30\trained_model\model.pkl
-history:
-  2022-08-26-21-23-30:
-    model_path: F:\study\iN\13Machine-learning-project_11June\store-sales-predictor\store-sales-predictor\store\artifact\model_trainer\2022-08-26-18-01-14\trained_model\model.pkl
