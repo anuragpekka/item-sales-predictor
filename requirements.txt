@@ -3,7 +3,6 @@ pandas
 Flask
 sklearn
 PyYAML
-evidently
-six
+deepchecks
 dill
 matplotlib

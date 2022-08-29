@@ -2,20 +2,15 @@ from store.logger import logging
 from store.exception import StoreException
 from store.entity.config_entity import DataValidationConfig
 from store.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
-from store.constant import DATA_VALIDATION_SCHEMA_COLUMNS_KEY,DATA_VALIDATION_SCHEMA_TARGET_COLUMN_KEY
+from store.constant import DATA_VALIDATION_SCHEMA_COLUMNS_KEY,DATA_VALIDATION_SCHEMA_TARGET_COLUMN_KEY,\
+                            CATEGORICAL_COLUMN_KEY
 import os,sys
 import pandas  as pd
 import json
-import copy
-from store.util.util import read_yaml_file
 
-#To get the calculation results as a JSON file, you should create a Profile.
-from evidently.model_profile import Profile
-from evidently.model_profile.sections import DataDriftProfileSection
-
-#Dashboard helps visually explore and evaluate the data and model performance.
-from evidently.dashboard import Dashboard
-from evidently.dashboard.tabs import DataDriftTab
+#To evaluate train-test data drift
+from deepchecks.tabular import Dataset
+from deepchecks.tabular.checks import TrainTestFeatureDrift
 
 
 class DataValidation:
@@ -101,44 +96,37 @@ class DataValidation:
         except Exception as e:
             raise StoreException(e,sys) from e
 
-    def get_and_save_data_drift_report(self):
+    def save_data_drift_report_and_report_page(self):
         try:
-            profile = Profile(sections=[DataDriftProfileSection()])
+            catagorical_features = self.data_validation_config.schema_info[CATEGORICAL_COLUMN_KEY]
 
             train_df,test_df = self.get_train_and_test_df()
+            train_ds = Dataset(train_df, cat_features=catagorical_features)
+            test_ds = Dataset(test_df, cat_features=catagorical_features)
 
-            profile.calculate(train_df,test_df)
-
-            report = json.loads(profile.json())
-
+            drift = TrainTestFeatureDrift().run(train_ds, test_ds)
+            
             report_file_path = self.data_validation_config.report_file_path
             report_dir = os.path.dirname(report_file_path)
             os.makedirs(report_dir,exist_ok=True)
 
+            report = json.loads(drift.to_json())
+
             with open(report_file_path,"w") as report_file:
                 json.dump(report, report_file, indent=6)
-            return report
-        except Exception as e:
-            raise StoreException(e,sys) from e
-
-    def save_data_drift_report_page(self):
-        try:
-            dashboard = Dashboard(tabs=[DataDriftTab()])
-            train_df,test_df = self.get_train_and_test_df()
-            dashboard.calculate(train_df,test_df)
 
             report_page_file_path = self.data_validation_config.report_page_file_path
             report_page_dir = os.path.dirname(report_page_file_path)
             os.makedirs(report_page_dir,exist_ok=True)
 
-            dashboard.save(report_page_file_path)
+            drift.save_as_html(report_page_file_path)
+            #dashboard.save(report_page_file_path)
         except Exception as e:
             raise StoreException(e,sys) from e
 
     def is_data_drift_found(self)->bool:
         try:
-            report = self.get_and_save_data_drift_report()
-            self.save_data_drift_report_page()
+            self.save_data_drift_report_and_report_page()
             return True
         except Exception as e:
             raise StoreException(e,sys) from e
