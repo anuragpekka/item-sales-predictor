@@ -110,7 +110,7 @@ class DataValidation:
             report_dir = os.path.dirname(report_file_path)
             os.makedirs(report_dir,exist_ok=True)
 
-            report = json.loads(drift.to_json())
+            report = json.loads(drift.to_json(with_display=False))
 
             with open(report_file_path,"w") as report_file:
                 json.dump(report, report_file, indent=6)
@@ -120,7 +120,6 @@ class DataValidation:
             os.makedirs(report_page_dir,exist_ok=True)
 
             drift.save_as_html(report_page_file_path)
-            #dashboard.save(report_page_file_path)
         except Exception as e:
             raise StoreException(e,sys) from e
 
@@ -138,7 +137,6 @@ class DataValidation:
             self.is_data_drift_found()
 
             data_validation_artifact = DataValidationArtifact(
-                #schema_file_path=self.data_validation_config.schema_file_path,
                 schema_info=self.data_validation_config.schema_info,
                 report_file_path=self.data_validation_config.report_file_path,
                 report_page_file_path=self.data_validation_config.report_page_file_path,
